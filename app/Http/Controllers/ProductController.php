@@ -17,10 +17,11 @@ class ProductController extends Controller
     public function index()
     {
         /* Aaron
-            NOTE:   Here we are calling the resource for translation of 
-                    response data. See ProductCollection for more detail
+            NOTE:   Here we are calling the resource collection
+                    and pagination (fix to 5 per page).
+                    TRY IT: http://eapi.app/api/products/ and see the result
         */        
-        return new ProductCollection(Product::all());
+        return new ProductCollection(Product::paginate(5));
     }
 
     /**

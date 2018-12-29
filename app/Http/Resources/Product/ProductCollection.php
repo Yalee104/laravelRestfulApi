@@ -14,6 +14,13 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProductCollection extends ResourceCollection
 {
+    /* Aaron
+        NOTE:   Collection is a plural of resource in this case 'Product', however, since we named
+                our resource as 'ProductResource' we will have to explicitly override it as shown below.
+                We dont need to override if we named our resource simply as 'Product.php'.
+    */
+    public $collects = 'App\Http\Resources\Product\ProductResource'; 
+
     /**
      * Transform the resource collection into an array.
      *
@@ -22,6 +29,15 @@ class ProductCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        /* Aaron
+            NOTE: The collection is from ProductResource.php of the transformed data!.
+        */
+        return [
+            'data' => $this->collection,
+            'Other Meta' => 'Other Meta Data if needed'
+            //Note that pagination 'link' and 'meta' will automatically added in the response if the request contain pagination (see ProductCOntroller.php)
+        ];
+        
+        //return parent::toArray($request);
     }
 }
