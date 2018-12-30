@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use App\Model;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,14 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        /*  Aaron
+         *  NOTE1:  Please check ReviewController.php's show method for detail why
+         *          we added the code below.
+         *  NOTE2:  Route::model explicitly maps the url parameter to DB model.
+         */
+        Route::model('product', Model\Product::class);
+        //Route::model('review', Model\Review::class);
     }
 
     /**

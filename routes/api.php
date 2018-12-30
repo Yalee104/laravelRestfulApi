@@ -29,12 +29,18 @@ Route::apiResource('/products', 'ProductController');
     NOTE:   Below are equivalent but group allows you to share route attributes such as middleware, etc.. in case its needed
             Its more convinient using group.
 */
-if(1){
-    Route::apiResource('/products/{product}/reviews', 'ReviewController');
+if(0){
+    Route::apiResource('/products/{product}/reviews', 'ReviewController')->parameters(['reviews' => 'reviewindex']);
 }
 else{
-    Route::group(['prefix' => 'productsaaa'], function(){
+    Route::group(['prefix' => 'product'], function(){
 
-        Route::apiResource('/{product}/reviews', 'ReviewController');
+        /* Aaron
+         *  NOTE:   The parameters function overrides the default parameter names, in this case
+         *          we don't want the parameter named as  api/product/{product}/reviews/{review} because
+         *          {review} is no the review database id, instead its the index of the product's reviews.
+         *          Therefore by overriding it as shown below we can obtain  api/product/{product}/reviews/{reviewindex}
+         */
+        Route::apiResource('/{product}/reviews', 'ReviewController')->parameters(['reviews' => 'reviewindex']);
     });
 }
