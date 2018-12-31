@@ -95,7 +95,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        //NOT USED, For API we use Update instead
     }
 
     /**
@@ -107,7 +107,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        /*  Aaron
+         *  NOTE:   Since the request from client does not contain 'detail' key because
+         *          its named as 'description' for more generic naming. Therefore we will
+         *          need to add detail key and copy the description value to it. Then its best to unset (remove) the
+         *          'description' key.
+         */
+        $request['detail'] = $request->description;
+        unset($request['description']);
+
+        /*  Aaron
+         *  NOTE:   We update the product base on what the user provided from the request, note that we already added
+         *          fillable in the Product Model for mass assignment to prevent overwriting protected keys.
+         */
+        $product->update($request->all());
+
+        return new ProductResource($product);
     }
 
     /**
