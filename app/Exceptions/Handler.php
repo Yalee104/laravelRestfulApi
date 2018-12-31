@@ -3,10 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -43,35 +40,29 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Exception $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
         /*  Aaron
-         *  NOTE1:  Here we are adding exception handlings, below is just an example of checking if the request
-         *          is expect json (eg, Accept application/json), otherwise we will return web html exception.
-         *  NOTE2:  In order to find which instance of exception that it belongs to us dd($exception)
-         *          to get the instance of failure scenario (it can be shown from PostMan response 'preview' window)
+         *  NOTE1:  Since previous commit violates SOLID principles we restructure the code
+         *          to honor the principles (hopefully) by abstracting the Handler with HandlerSeparator class
+         *          that checks if the class or its child can handle the exceptions and render it.
+         *          In this implementation the ApiHandler class handles the API specific rendering while
+         *          its parent class HandlerSeparator calls the exception that can be handled.
          */
         //dd($exception); //uncomment to show detail debug
-        if ($request->expectsJson())
-        {
-            if ($exception instanceof ModelNotFoundException)
-            {
-                return response()->json([
-                        'error' => 'Product Model Not Found'
-                    ], Response::HTTP_NOT_FOUND);
-            }
 
-            if ($exception instanceof  NotFoundHttpException)
-            {
-                return response()->json([
-                    'error' => 'Incorrect Route'
-                ], Response::HTTP_NOT_FOUND);
-            }
+        $Apihandler = new ApiHandler($request, $exception);
+        if ($Apihandler->CanHandle())
+        {
+            return $Apihandler->render();
         }
-        return parent::render($request, $exception);
+        else
+        {
+            return parent::render($request, $exception);
+        }
     }
 }
