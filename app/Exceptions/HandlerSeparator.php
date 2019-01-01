@@ -10,6 +10,8 @@ interface ExceptionSeparatorInterface
 {
     public function ExceptionSeparatorInterface_ModelNotFoundException($request);
     public function ExceptionSeparatorInterface_NotFoundHttpException($request);
+    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request);
+
 }
 
 class HandlerSeparator
@@ -85,7 +87,8 @@ class HandlerSeparator
      */
     public function render()
     {
-        if ($this->CanHandle()) {
+        //Check CanHandle from self instead of child (if inherited) to make sure the method is implemented.
+        if (self::CanHandle()) {
             return $this->callExceptionRenderer();
         }
         else {

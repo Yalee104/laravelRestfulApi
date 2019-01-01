@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ProductNotBelongsToUser;
 use App\Http\Requests\ProductRequest;
 use App\Model\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
@@ -63,6 +65,7 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stock = $request->stock;
         $product->discount = $request->discount;
+        $product->user_id = Auth::id();
         $product->save();
 
         //We send back the response with data we created, we want to response with the transformed data
@@ -107,6 +110,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        //Check if this updated product belongs to the user
+        $this->ProductUserCheck($product);
+
         /*  Aaron
          *  NOTE:   Since the request from client does not contain 'detail' key because
          *          its named as 'description' for more generic naming. Therefore we will
@@ -133,6 +139,25 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        //Check if this updated product belongs to the user
+        $this->ProductUserCheck($product);
+
         $product->delete();
-        return response(null,Response::HTTP_NO_CONTENT);    }
+        return response(null,Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * Check if product belongs to user, if not throw exception
+     *
+     * @param  \App\Model\Product  $product
+     * @return void
+     */
+    public function ProductUserCheck($product)
+    {
+        if (Auth::id() !== $product->user_id)
+        {
+            throw new ProductNotBelongsToUser;
+        }
+    }
+
 }

@@ -36,7 +36,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
     public function ExceptionSeparatorInterface_ModelNotFoundException($request)
     {
         return response()->json([
-            'error' => 'Product Model Not Found'
+            'error' => 'Product/Review Model Not Found'
         ], Response::HTTP_NOT_FOUND);
     }
 
@@ -52,5 +52,20 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
             'error' => 'Incorrect Route'
         ], Response::HTTP_NOT_FOUND);
     }
+
+
+    /**
+     * ProductNotBelongsToUser Render for ApiHandler
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request)
+    {
+        return response()->json([
+            'error' => 'Product not belong to user'
+        ], Response::HTTP_UNAUTHORIZED);
+    }
+
 
 }

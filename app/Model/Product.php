@@ -10,7 +10,7 @@ class Product extends Model
      *  NOTE:   We add fillable to prevent overwriting protected keys during mass assignment,
      *          in this case only below key is allowed to be updated or created
      */
-    protected $fillable = ['name', 'detail', 'price', 'stock', 'discount'];
+    protected $fillable = ['name', 'detail', 'price', 'stock', 'discount', 'user_id'];
 
     public function reviews()
     {

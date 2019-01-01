@@ -20,6 +20,10 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('stock');
             $table->integer('discount');
+            $table->integer('user_id')->unsigned()->index();
+            /*The foreign key 'user_id' that is referencing the 'id' from 'users' table, when deleted it should
+            also automatically delete all product belongs to the user automatically */
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
