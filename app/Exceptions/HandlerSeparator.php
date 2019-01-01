@@ -11,6 +11,7 @@ interface ExceptionSeparatorInterface
     public function ExceptionSeparatorInterface_ModelNotFoundException($request);
     public function ExceptionSeparatorInterface_NotFoundHttpException($request);
     public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request);
+    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request);
 
 }
 

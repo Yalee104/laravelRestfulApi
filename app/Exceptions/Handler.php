@@ -61,6 +61,9 @@ class Handler extends ExceptionHandler
         }
         else
         {
+            //TODO: This will cause internal error if the exception is one of ours (eg, ProductNotBelongsToUser) while
+            //      the request does not include Accept as Application/Json. Need to find a way to handle this properly
+            //      to avoid internal error!!
             return parent::render($request, $exception);
         }
     }

@@ -30,17 +30,16 @@ Route::apiResource('/products', 'ProductController');
             Its more convinient using group.
 */
 if(0){
-    Route::apiResource('/products/{product}/reviews', 'ReviewController')->parameters(['reviews' => 'reviewindex']);
+    Route::apiResource('/products/{product}/reviews', 'ReviewController');
 }
 else{
     Route::group(['prefix' => 'product'], function(){
 
         /* Aaron
-         *  NOTE:   The parameters function overrides the default parameter names, in this case
-         *          we don't want the parameter named as  api/product/{product}/reviews/{review} because
-         *          {review} is no the review database id, instead its the index of the product's reviews.
-         *          Therefore by overriding it as shown below we can obtain  api/product/{product}/reviews/{reviewindex}
+         *  NOTE:   This commit we are changing it back to original, both product and review does actually
+         *          passed into the controller but we will need to match the number of input from request and
+         *          provide/describe the type of the parameter. Please see the ReviewController.php difference in this changes.
          */
-        Route::apiResource('/{product}/reviews', 'ReviewController')->parameters(['reviews' => 'reviewindex']);
+        Route::apiResource('/{product}/reviews', 'ReviewController');
     });
 }

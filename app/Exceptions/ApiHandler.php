@@ -70,4 +70,19 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
     }
 
 
+    /**
+     * ReviewNotBelongToProduct Render for ApiHandler
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request)
+    {
+        return response()->json([
+            'error' => 'This review does not belong to the specified product'
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+
+
 }

@@ -32,8 +32,11 @@ class RouteServiceProvider extends ServiceProvider
          *  NOTE1:  Please check ReviewController.php's show method for detail why
          *          we added the code below.
          *  NOTE2:  Route::model explicitly maps the url parameter to DB model.
+         *  NOTE3:  In this latest changes we do not need it as we are using laravel implicit mapping,
+         *          for that the route api.php must not override the review parameter like we did before, see the
+         *          changes of api.php in this commit.
          */
-        Route::model('product', Model\Product::class);
+        //Route::model('product', Model\Product::class);
         //Route::model('review', Model\Review::class);
     }
 
