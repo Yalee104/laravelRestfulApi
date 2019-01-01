@@ -17,9 +17,11 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
     {
         $bCanHandle = false;
 
-        if ($this->requestForSeparator->expectsJson())
-        {
-            $bCanHandle = true;
+        //make sure we first check from the parent class if we can handle the exception request
+        if (parent::CanHandle()) {
+            if ($this->requestForSeparator->expectsJson()) {
+                $bCanHandle = true;
+            }
         }
 
         return $bCanHandle;

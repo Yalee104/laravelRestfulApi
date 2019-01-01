@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
          *          its parent class HandlerSeparator calls the exception that can be handled.
          */
         //dd($exception); //uncomment to show detail debug
-
         $Apihandler = new ApiHandler($request, $exception);
         if ($Apihandler->CanHandle())
         {

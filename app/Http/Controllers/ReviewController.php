@@ -2,14 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReviewRequest;
 use App\Http\Resources\Product\ReviewCollection;
 use App\Http\Resources\Product\ReviewResource;
 use App\Model\Review;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ReviewController extends Controller
 {
+    /*  Aaron
+     *  NOTE:   Add constructor so that we can intercept to use api authentication middleware
+     *          to prevent unauthorized access
+     */
+    public function __construct()
+    {
+        /*  Aaron
+         *  NOTE: Use middleware api authentication to prevent unauthorized access "except" index and show page.
+         *        In this Review controller we would like log-in user to POST for review as opposed to open public.
+         */
+        $this->middleware('auth:api')->except('index','show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,24 +42,34 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        //NOT USED, We use Store instead
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReviewRequest $request, Product $product)
     {
-        //
+        $reviewCreate = new Review;
+        $reviewCreate->product_id = $product->id;
+        $reviewCreate->customer = $product->name;
+        $reviewCreate->review = $request->description;
+        $reviewCreate->star = $request->rating;
+        $reviewCreate->save();
+
+        return response([
+            "data" => new ReviewResource($reviewCreate)
+        ],Response::HTTP_CREATED);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\Review  $review
+     * @param  \App\Model\Product  product
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product, $reviewIndex)
@@ -76,7 +101,7 @@ class ReviewController extends Controller
      */
     public function edit(Review $review)
     {
-        //
+        //NOT USED, We do not allow Review editing
     }
 
     /**
@@ -88,7 +113,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request, Review $review)
     {
-        //
+        //NOT USED, We do not allow Review Update
     }
 
     /**
@@ -99,6 +124,6 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        //NOT USED, We do not allow Review delete
     }
 }
