@@ -31,8 +31,10 @@ class ProductController extends Controller
          *  NOTE2:  Index Page is limited by IP because we do not require user log in to view the pages as described from above middleware except
          *  NOTE3:  Show page is limited by User because we do require user log-in/authorization for Show page request in this example!
          *  NOTE4:  For the throttle rule detail can check ThrottleRequest.php resolveRequestSignature method.
+         *  NOTE5:  We can also dynamic limit the access by providing the name of the attribute in the User model which in example below
+         *          its accesslimit (this is added to the Users table) and throttle will take this instead.
          */
-        $this->middleware('throttle:5,1')->only('index','show');
+        $this->middleware('throttle:accesslimit,1')->only('index','show');
     }
 
     /**
