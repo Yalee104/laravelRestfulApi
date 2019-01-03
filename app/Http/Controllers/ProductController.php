@@ -20,9 +20,19 @@ class ProductController extends Controller
     public function __construct()
     {
         /*  Aaron
-         *  NOTE: Use middleware api authentication to preven unauthorized access "except" index and show page.
+         *  NOTE:   Use middleware api authentication to preven unauthorized access "except" index page.
+         *          We are removing show page for throttle demonstration purposes (see below).
          */
-        $this->middleware('auth:api')->except('index','show');
+        $this->middleware('auth:api')->except('index');
+
+        /*  Aaron
+         *  NOTE1:  Throttle middleware controls the maximum API attemps before it throws exception,
+         *          below we limit the attempt for index and show pages with 5 times per minutes
+         *  NOTE2:  Index Page is limited by IP because we do not require user log in to view the pages as described from above middleware except
+         *  NOTE3:  Show page is limited by User because we do require user log-in/authorization for Show page request in this example!
+         *  NOTE4:  For the throttle rule detail can check ThrottleRequest.php resolveRequestSignature method.
+         */
+        $this->middleware('throttle:5,1')->only('index','show');
     }
 
     /**

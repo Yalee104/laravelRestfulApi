@@ -83,6 +83,17 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
         ], Response::HTTP_BAD_REQUEST);
     }
 
-
+    /**
+     * ThrottleRequestsException Render for ApiHandler
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function ExceptionSeparatorInterface_ThrottleRequestsException($request)
+    {
+        return response()->json([
+        'error' => 'Maximum API attempt reached!'
+        ], Response::HTTP_BAD_REQUEST);
+    }
 
 }
