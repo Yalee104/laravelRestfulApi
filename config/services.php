@@ -40,4 +40,13 @@ return [
         ],
     ],
 
+    'twitter' => [
+
+        /*  Aaron
+         *  NOTE:   No default here for security reason, we will need to get it from .env file..
+         *          Make sure to include this key in .env
+         */
+        'key' => env('TWITTER_API_KEY'),
+    ],
+
 ];
