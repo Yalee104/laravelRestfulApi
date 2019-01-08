@@ -13,7 +13,11 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    /*  Aaron
+     *  NOTE:   the env() check if the ket (in this case APP_NAME) exist from .env file, if so it will use its value
+     *          if not, it will use the specified default instead (in this case TITAN)
+     */
+    'name' => env('APP_NAME', 'TITAN'),
 
     /*
     |--------------------------------------------------------------------------
