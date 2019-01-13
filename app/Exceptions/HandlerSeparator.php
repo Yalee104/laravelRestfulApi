@@ -8,11 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface ExceptionSeparatorInterface
 {
-    public function ExceptionSeparatorInterface_ModelNotFoundException($request);
-    public function ExceptionSeparatorInterface_NotFoundHttpException($request);
-    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request);
-    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request);
-    public function ExceptionSeparatorInterface_ThrottleRequestsException($request);
+    public function ExceptionSeparatorInterface_ModelNotFoundException($request,$exception);
+    public function ExceptionSeparatorInterface_NotFoundHttpException($request,$exception);
+    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request,$exception);
+    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request,$exception);
+    public function ExceptionSeparatorInterface_ThrottleRequestsException($request,$exception);
 
 
 }
@@ -63,7 +63,7 @@ class HandlerSeparator
     protected function callExceptionRenderer()
     {
         $method = $this->GetExceptionInterfaceMethod();
-        return $this->$method($this->requestForSeparator);
+        return $this->$method($this->requestForSeparator,$this->exceptionForSeparator);
     }
 
     /**

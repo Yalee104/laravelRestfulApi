@@ -35,7 +35,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ExceptionSeparatorInterface_ModelNotFoundException($request)
+    public function ExceptionSeparatorInterface_ModelNotFoundException($request, $exception)
     {
         return response()->json([
             'error' => 'Product/Review Model Not Found'
@@ -48,7 +48,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ExceptionSeparatorInterface_NotFoundHttpException($request)
+    public function ExceptionSeparatorInterface_NotFoundHttpException($request,$exception)
     {
         return response()->json([
             'error' => 'Incorrect Route'
@@ -62,7 +62,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request)
+    public function ExceptionSeparatorInterface_ProductNotBelongsToUser($request,$exception)
     {
         return response()->json([
             'error' => 'Product not belong to user'
@@ -76,7 +76,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request)
+    public function ExceptionSeparatorInterface_ReviewNotBelongToProduct($request,$exception)
     {
         return response()->json([
             'error' => 'This review does not belong to the specified product'
@@ -89,7 +89,7 @@ class ApiHandler extends HandlerSeparator implements ExceptionSeparatorInterface
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function ExceptionSeparatorInterface_ThrottleRequestsException($request)
+    public function ExceptionSeparatorInterface_ThrottleRequestsException($request,$exception)
     {
         return response()->json([
         'error' => 'Maximum API attempt reached!'
