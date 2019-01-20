@@ -20,13 +20,13 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* Admin Authentication Route */
-Route::get('/AdminHome', 'AdminHomeController@index')->name('admin.home');
-Route::post('/AdminLogin', 'Admin\AdminLoginController@login');
-Route::get('/AdminLogin', 'Admin\AdminLoginController@showLoginForm')->name('admin.login');
-Route::post('/AdminLogout', 'Admin\AdminLoginController@logout')->name('admin.logout');
-Route::post('/AdminPassword/email', 'Admin\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
-Route::get('/AdminPassword/reset', 'Admin\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
-Route::post('/AdminPassword/reset', 'Admin\AdminResetPasswordController@reset')->name('admin.password.update');
-Route::get('/AdminPassword/reset/{token}', 'Admin\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+Route::get('/admin', 'AdminHomeController@index')->name('admin.home');
+Route::post('/admin/login', 'Admin\AdminLoginController@login');
+Route::get('/admin/login', 'Admin\AdminLoginController@showLoginForm')->name('admin.login');
+Route::post('/admin/logout', 'Admin\AdminLoginController@logout')->name('admin.logout');
+Route::post('/admin/password/email', 'Admin\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
+Route::get('/admin/password/reset', 'Admin\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
+Route::post('/admin/password/reset', 'Admin\AdminResetPasswordController@reset')->name('admin.password.update');
+Route::get('/admin/password/reset/{token}', 'Admin\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 
 
