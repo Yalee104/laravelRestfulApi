@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AdminLoginController extends Controller
 {
@@ -57,4 +59,21 @@ class AdminLoginController extends Controller
     {
         return Auth::guard('admin');
     }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        /*  AARON
+         *  NOTE: For detail why we override this method please see all the detail from LoginController.php
+         *        authenticated method. Its the same reason but the otherway around.
+         */
+        return  redirect()->route('admin.home');
+    }
+
 }
