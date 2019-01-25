@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class AdminResetPasswordController extends Controller
 {
@@ -63,5 +64,19 @@ class AdminResetPasswordController extends Controller
     protected function guard()
     {
         return Auth::guard('admin');
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        /*  AARON
+         *  NOTE1:  We override the broker so that Admin reset password will look for broker admins (see config/auth.php passwords)
+         *          and check if the email exist in admins table.
+         */
+        return Password::broker('admins');
     }
 }
